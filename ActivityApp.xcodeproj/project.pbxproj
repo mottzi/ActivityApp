@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		9A1456202C7E97CC001CD8F9 /* ActivityApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A14561F2C7E97CC001CD8F9 /* ActivityApp.swift */; };
 		9A1456242C7E97CD001CD8F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A1456232C7E97CD001CD8F9 /* Assets.xcassets */; };
-		9A1456272C7E97CD001CD8F9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A1456262C7E97CD001CD8F9 /* Preview Assets.xcassets */; };
 		9A14562F2C7E981B001CD8F9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A14562E2C7E981B001CD8F9 /* Extensions.swift */; };
 		9A1456312C7E9825001CD8F9 /* OSMTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1456302C7E9825001CD8F9 /* OSMTag.swift */; };
 		9A1456332C7E9841001CD8F9 /* UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1456322C7E9841001CD8F9 /* UserLocation.swift */; };
@@ -26,7 +25,6 @@
 		9A14561C2C7E97CC001CD8F9 /* ActivityApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActivityApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A14561F2C7E97CC001CD8F9 /* ActivityApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityApp.swift; sourceTree = "<group>"; };
 		9A1456232C7E97CD001CD8F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9A1456262C7E97CD001CD8F9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9A14562E2C7E981B001CD8F9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		9A1456302C7E9825001CD8F9 /* OSMTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSMTag.swift; sourceTree = "<group>"; };
 		9A1456322C7E9841001CD8F9 /* UserLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocation.swift; sourceTree = "<group>"; };
@@ -73,17 +71,8 @@
 				9A1456342C7E984D001CD8F9 /* Managers */,
 				9AB258302C7EA6AD0063CFEF /* ActivityPickerScreen */,
 				9A1456232C7E97CD001CD8F9 /* Assets.xcassets */,
-				9A1456252C7E97CD001CD8F9 /* Preview Content */,
 			);
 			path = ActivityApp;
-			sourceTree = "<group>";
-		};
-		9A1456252C7E97CD001CD8F9 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				9A1456262C7E97CD001CD8F9 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		9A14562D2C7E97F6001CD8F9 /* Abstract */ = {
@@ -176,7 +165,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A1456272C7E97CD001CD8F9 /* Preview Assets.xcassets in Resources */,
 				9A1456242C7E97CD001CD8F9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,7 +319,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"ActivityApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 4DXABR577J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -361,7 +349,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"ActivityApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 4DXABR577J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
