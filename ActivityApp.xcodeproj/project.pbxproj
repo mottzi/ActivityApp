@@ -71,11 +71,7 @@
 			children = (
 				9A14562D2C7E97F6001CD8F9 /* Abstract */,
 				9A1456342C7E984D001CD8F9 /* Managers */,
-				9A1456392C7E9885001CD8F9 /* ActivityPickerScreen.swift */,
-				9A14563B2C7E989E001CD8F9 /* HorizontalTagPicker.swift */,
-				9A14563D2C7E98A7001CD8F9 /* SearchBar.swift */,
-				9A14563F2C7E98B7001CD8F9 /* TagButton.swift */,
-				9A1456412C7E98C0001CD8F9 /* TagMap.swift */,
+				9AB258302C7EA6AD0063CFEF /* ActivityPickerScreen */,
 				9A1456232C7E97CD001CD8F9 /* Assets.xcassets */,
 				9A1456252C7E97CD001CD8F9 /* Preview Content */,
 			);
@@ -104,10 +100,22 @@
 		9A1456342C7E984D001CD8F9 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				9A1456352C7E985C001CD8F9 /* MapManager.swift */,
 				9A1456372C7E9868001CD8F9 /* TagManager.swift */,
+				9A1456352C7E985C001CD8F9 /* MapManager.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		9AB258302C7EA6AD0063CFEF /* ActivityPickerScreen */ = {
+			isa = PBXGroup;
+			children = (
+				9A1456392C7E9885001CD8F9 /* ActivityPickerScreen.swift */,
+				9A1456412C7E98C0001CD8F9 /* TagMap.swift */,
+				9A14563D2C7E98A7001CD8F9 /* SearchBar.swift */,
+				9A14563B2C7E989E001CD8F9 /* HorizontalTagPicker.swift */,
+				9A14563F2C7E98B7001CD8F9 /* TagButton.swift */,
+			);
+			path = ActivityPickerScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
