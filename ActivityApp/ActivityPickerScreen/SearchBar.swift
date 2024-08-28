@@ -47,28 +47,32 @@ struct SearchBar: View
         .overlay(alignment: .trailing) { searchClearButton }
     }
     
+    @ViewBuilder
     var searchClearButton: some View
     {
-        Button
+        if !searchText.isEmpty
         {
-            searchText = ""
-            focusedField = .search
+            Button
+            {
+                searchText = ""
+                focusedField = .search
+            }
+            label:
+            {
+                Image(systemName: "xmark.circle.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 16, height: 16)
+                    .frame(width: 45)
+                    .frame(maxHeight: .infinity)
+                    .fontWeight(.medium)
+                    .contentShape(.rect)
+            }
+            .padding(.trailing, 22)
+            .foregroundStyle(.black.opacity(0.8))
+            .disabled(searchText.isEmpty)
+            .transaction { $0.disablesAnimations = true }
         }
-        label:
-        {
-            Image(systemName: "xmark.circle.fill")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 16, height: 16)
-                .frame(width: 45)
-                .frame(maxHeight: .infinity)
-                .fontWeight(.medium)
-                .contentShape(.rect)
-        }
-        .padding(.trailing, 22)
-        .foregroundStyle(.black.opacity(searchText.isEmpty ? 0 : 0.8))
-        .disabled(searchText.isEmpty)
-        .transaction { $0.disablesAnimations = true }
     }
     
     var extendedHitBox: some View
