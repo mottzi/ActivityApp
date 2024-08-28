@@ -54,7 +54,7 @@ struct SearchBar: View
             searchText = ""
             focusedField = .search
         }
-    label:
+        label:
         {
             Image(systemName: "xmark.circle.fill")
                 .resizable()
@@ -75,10 +75,7 @@ struct SearchBar: View
     {
         Color.clear
             .contentShape(.rect)
-            .onTapGesture
-        {
-            focusedField = .search
-        }
+            .onTapGesture { focusedField = .search }
     }
     
     var searchPrompt: Text

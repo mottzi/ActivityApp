@@ -18,14 +18,14 @@ struct ActivityPickerScreen: View
     {
         TagMap(mapManager: $mapManager)
             .overlay(alignment: .top)
-        {
-            VStack(spacing: 0)
             {
-                SearchBar()
-                HorizontalTagPicker(tagManager: $tagManager)
+                VStack(spacing: 0)
+                {
+                    SearchBar()
+                    HorizontalTagPicker(tagManager: $tagManager)
+                }
+                .padding(.top, 6)
             }
-            .padding(.top, 6)
-        }
     }
 }
 

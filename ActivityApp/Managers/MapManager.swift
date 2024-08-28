@@ -13,4 +13,9 @@ import MapKit
     {
         self.tagManager = tagManager
     }
+    
+    func updateCamera(_ camera: MapCamera)
+    {
+        self.camera = camera
+    }
 }

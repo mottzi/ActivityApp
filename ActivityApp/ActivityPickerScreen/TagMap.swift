@@ -14,10 +14,7 @@ struct TagMap: View
             UserAnnotation()
         }
         .onMapChange(mapManager: mapManager, mapManager.tagManager.resetCurrentTag)
-        .onMapCameraChange(frequency: .continuous)
-        {
-            mapManager.camera = $0.camera
-        }
+        .onMapCameraChange(frequency: .continuous) { mapManager.updateCamera($0.camera) }
         .overlay(alignment: .bottomTrailing)
         {
             VStack
@@ -51,9 +48,9 @@ extension Map
             .onChange(of: mapManager.position.followsUserLocation, action)
             .onChange(of: mapManager.position.followsUserHeading, action)
             .onMapCameraChange(frequency: .continuous)
-        {
-            if mapManager.position.positionedByUser { action() }
-        }
+            {
+                if mapManager.position.positionedByUser { action() }
+            }
     }
 }
 
