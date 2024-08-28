@@ -7,7 +7,8 @@ import MapKit
     
     var position: MapCameraPosition = .userLocation(fallback: .automatic)
     var camera: MapCamera?
-    //var region: MKCoordinateRegion?
+    
+    let locationManager = CLLocationManager()
     
     init(tagManager: TagManager)
     {
@@ -17,5 +18,10 @@ import MapKit
     func updateCamera(_ camera: MapCamera)
     {
         self.camera = camera
+    }
+    
+    func requestAuthorization()
+    {
+        self.locationManager.requestWhenInUseAuthorization()
     }
 }

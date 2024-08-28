@@ -6,15 +6,16 @@ struct TagMap: View
     @Namespace var mapScope
     
     @Binding var mapManager: MapManager
-   
+    
     var body: some View
     {
         Map(position: $mapManager.position, scope: mapScope)
         {
             UserAnnotation()
         }
-        .onMapChange(mapManager: mapManager, mapManager.tagManager.resetCurrentTag)
+        .onMapChange(mapManager: mapManager, mapManager.tagManager.scrollToFirst)
         .onMapCameraChange(frequency: .continuous) { mapManager.updateCamera($0.camera) }
+        .onAppear(perform: mapManager.requestAuthorization)
         .overlay(alignment: .bottomTrailing)
         {
             VStack

@@ -26,7 +26,7 @@ import SwiftUI
         }
     }
     
-    public func resetCurrentTag()
+    public func scrollToFirst()
     {
         guard let currentTag else { return }
         guard currentTag != self.allTags.first else { return }
