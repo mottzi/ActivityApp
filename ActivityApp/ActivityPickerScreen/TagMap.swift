@@ -3,9 +3,10 @@ import MapKit
 
 struct TagMap: View
 {
-    @Namespace var mapScope
+    @Environment(\.scenePhase) var scenePhase
     
     @Binding var mapManager: MapManager
+    @Namespace var mapScope
     
     var body: some View
     {
@@ -16,6 +17,13 @@ struct TagMap: View
         .onMapChange(mapManager: mapManager, mapManager.tagManager.scrollToFirst)
         .onMapCameraChange(frequency: .continuous) { mapManager.updateCamera($0.camera) }
         .onAppear(perform: mapManager.requestAuthorization)
+        .onChange(of: scenePhase)
+        {
+            guard scenePhase == .active else { return }
+            
+            mapManager.requestAuthorization()
+            mapManager.resetToUserLocation()
+        }
         .overlay(alignment: .bottomTrailing)
         {
             VStack

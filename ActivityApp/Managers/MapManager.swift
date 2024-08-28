@@ -8,7 +8,7 @@ import MapKit
     var position: MapCameraPosition = .userLocation(fallback: .automatic)
     var camera: MapCamera?
     
-    let locationManager = CLLocationManager()
+    @ObservationIgnored let locationManager = CLLocationManager()
     
     init(tagManager: TagManager)
     {
@@ -23,5 +23,10 @@ import MapKit
     func requestAuthorization()
     {
         self.locationManager.requestWhenInUseAuthorization()
+    }
+    
+    func resetToUserLocation()
+    {
+        withAnimation { self.position = .userLocation(fallback: .automatic) }
     }
 }
