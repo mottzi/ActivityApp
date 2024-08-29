@@ -29,49 +29,63 @@ struct TagMap: View
             mapManager.region = $0.region
 //            mapManager.camera = $0.camera
         }
-        .onAppear(perform: mapManager.requestAuthorization)
+//        .onAppear(perform: mapManager.requestAuthorization)
 //         .onChangeTagSelection(mapManager: mapManager)
         .onChange(of: mapManager.tagManager.selectedTags)
-        { old, new in
-            print("onChange selectedTags")
-            // make sure we have a valid map region,
-            guard let region = self.mapManager.region,
-                  let tag = new.first,
-                  let category = tag.category
-            else { return resetMap() }
-                  
-            // prepare local search request
-            let request = MKLocalSearch.Request()
-            request.naturalLanguageQuery = tag.name
-            request.resultTypes = .pointOfInterest
-            request.pointOfInterestFilter = MKPointOfInterestFilter(including: category)
-            request.region = region
+        { oldTags, newTags in
+            // if all tags are unselected, reset map
+            guard newTags.count > 0 else { return /*resetMap()*/ }
+            // if there is no coordinate region, reset map
+            guard let region = self.mapManager.region else { return /*resetMap()*/ }
             
-            MKLocalSearch(request: request).start()
-            { response, _ in
-                // reset map if error occured
-                guard let response else { return resetMap() }
+            // every search request appends to this array
+            var filteredItems: [MKMapItem] = []
+            
+            // wait for all sub-requests to respond
+            let group = DispatchGroup()
+            for tag in newTags where tag.category != nil
+            {
+                // prepare sub-request
+                let request = MKLocalSearch.Request()
+                request.naturalLanguageQuery = tag.name
+                request.resultTypes = .pointOfInterest
+                request.pointOfInterestFilter = MKPointOfInterestFilter(including: tag.category!)
+                request.region = region
                 
-                DispatchQueue.main.async
-                {
-                    withAnimation
+                group.enter()
+                
+                MKLocalSearch(request: request).start()
+                { response, _ in
+                    // fetch items from sub-request
+                    if let response
                     {
-                        // only add found items if they are inside the current map coordinate region
-                        searchResults = response.mapItems.filter({ region.contains($0.placemark.coordinate) })
-                        
-                        if searchResults.isEmpty
-                        {
-                            // center map around user location if nothing was found
-                             mapManager.position = .userLocation(fallback: .automatic)
-                        }
-                        else
-                        {
-                            // position map so every marker is visible
-                             mapManager.position = .automatic
-                        }
-                        
-                        print("* Found '\(searchResults.count)' items for category '\(tag.name)'")
+                        let result = response.mapItems.filter({ region.contains($0.placemark.coordinate) })
+                        filteredItems.append(contentsOf: result)
                     }
+                    
+                    group.leave()
+                }
+            }
+            
+            // all sub-requests have responded
+            group.notify(queue: .main)
+            {
+                print("* Found '\(filteredItems.count)' items.")
+
+                withAnimation
+                {
+                    // update state variable with new map items
+                    searchResults = filteredItems
+                    
+                    // center map around user location if nothing was found
+//                    if searchResults.isEmpty
+//                    {
+//                        mapManager.position = .userLocation(fallback: .automatic)
+//                    }
+//                    else // position map so every marker is visible
+//                    {
+//                        mapManager.position = .automatic
+//                    }
                 }
             }
         }
@@ -142,7 +156,7 @@ struct CoordinateCapsule: View
     @Environment(\.colorScheme) var scheme
     
     let camera: MapCamera?
-    
+        
     var body: some View
     {
         Text(camera?.centerCoordinate != nil && camera?.distance != nil ? "\(camera!.centerCoordinate.latitude) | \(camera!.centerCoordinate.longitude) | \(camera!.distance.string) m" : "nothing")

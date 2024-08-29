@@ -16,6 +16,8 @@ import MapKit
     init(tagManager: TagManager)
     {
         self.tagManager = tagManager
+        
+        self.requestAuthorization()
     }
     
 //    func updateCamera(_ camera: MapCamera)
