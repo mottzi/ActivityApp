@@ -15,25 +15,25 @@ struct TagMap: View
         Map(position: $mapManager.position, scope: mapScope)
         {
             UserAnnotation()
-                        
+               
+            let _ = Self._printChanges()
+            
             ForEach(searchResults, id: \.self)
             { result in
                 Marker(item: result)
             }
         }
         .onMapChange(mapManager: mapManager, mapManager.tagManager.scrollToFirst)
-        .onMapCameraChange(frequency: .continuous) 
-        {
-            mapManager.region = $0.region
-        }
         .onMapCameraChange(frequency: .onEnd)
         {
-            mapManager.updateCamera($0.camera)
+            mapManager.region = $0.region
+//            mapManager.camera = $0.camera
         }
         .onAppear(perform: mapManager.requestAuthorization)
-        // .onChangeTagSelection(mapManager: mapManager)
+//         .onChangeTagSelection(mapManager: mapManager)
         .onChange(of: mapManager.tagManager.selectedTags)
         { old, new in
+            print("onChange selectedTags")
             // make sure we have a valid map region,
             guard let region = self.mapManager.region,
                   let tag = new.first,
@@ -52,23 +52,26 @@ struct TagMap: View
                 // reset map if error occured
                 guard let response else { return resetMap() }
                 
-                withAnimation
+                DispatchQueue.main.async
                 {
-                    // only add found items if they are inside the current map coordinate region
-                    searchResults = response.mapItems.filter({ region.contains($0.placemark.coordinate) })
-                    
-                    if searchResults.isEmpty
+                    withAnimation
                     {
-                        // center map around user location if nothing was found
-                        mapManager.position = .userLocation(fallback: .automatic)
+                        // only add found items if they are inside the current map coordinate region
+                        searchResults = response.mapItems.filter({ region.contains($0.placemark.coordinate) })
+                        
+                        if searchResults.isEmpty
+                        {
+                            // center map around user location if nothing was found
+                             mapManager.position = .userLocation(fallback: .automatic)
+                        }
+                        else
+                        {
+                            // position map so every marker is visible
+                             mapManager.position = .automatic
+                        }
+                        
+                        print("* Found '\(searchResults.count)' items for category '\(tag.name)'")
                     }
-                    else
-                    {
-                        // position map so every marker is visible
-                        mapManager.position = .automatic
-                    }
-                    
-                    print("* Found '\(searchResults.count)' items for category '\(tag.name)'")
                 }
             }
         }
@@ -94,7 +97,7 @@ struct TagMap: View
         }
         .overlay(alignment: .bottom)
         {
-            CoordinateCapsule(camera: mapManager.camera)
+//            CoordinateCapsule(camera: mapManager.camera)
         }
         .ignoresSafeArea(.keyboard)
         .mapStyle(.standard(elevation: .realistic, pointsOfInterest: .excludingAll))
@@ -104,12 +107,15 @@ struct TagMap: View
     
     func resetMap()
     {
-        withAnimation
+        DispatchQueue.main.async
         {
-            // remove all map markers
-            searchResults = []
-            // reset map
-            mapManager.position = .userLocation(fallback: .automatic)
+            withAnimation
+            {
+                // remove all map markers
+                searchResults = []
+                // reset map
+                mapManager.position = .userLocation(fallback: .automatic)
+            }
         }
     }
 }
