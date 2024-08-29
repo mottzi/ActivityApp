@@ -34,69 +34,41 @@ struct TagMap: View
         // .onChangeTagSelection(mapManager: mapManager)
         .onChange(of: mapManager.tagManager.selectedTags)
         { old, new in
-            print("change of tag selection detected [\(new.map { $0.name }.joined(separator: ", "))]")
-             
             // make sure we have a valid map region,
             guard let region = self.mapManager.region,
                   let tag = new.first,
                   let category = tag.category
-            else
-            {
-                withAnimation
-                {
-                    // reset map
-                    searchResults = []
-                    mapManager.position = .userLocation(fallback: .automatic)
-                }
-                print("region, tag, or category invalid")
-                return
-            }
-                                            
+            else { return resetMap() }
+                  
+            // prepare local search request
             let request = MKLocalSearch.Request()
             request.naturalLanguageQuery = tag.name
             request.resultTypes = .pointOfInterest
             request.pointOfInterestFilter = MKPointOfInterestFilter(including: category)
             request.region = region
             
-            Task
-            {
-                guard let response = try? await MKLocalSearch(request: request).start() else
+            MKLocalSearch(request: request).start()
+            { response, _ in
+                // reset map if error occured
+                guard let response else { return resetMap() }
+                
+                withAnimation
                 {
-                    DispatchQueue.main.async
+                    // only add found items if they are inside the current map coordinate region
+                    searchResults = response.mapItems.filter({ region.contains($0.placemark.coordinate) })
+                    
+                    if searchResults.isEmpty
                     {
-                        withAnimation
-                        {
-                            // remove all map markers
-                            searchResults = []
-                            // reset map
-                            mapManager.position = .userLocation(fallback: .automatic)
-                        }
+                        // center map around user location if nothing was found
+                        mapManager.position = .userLocation(fallback: .automatic)
+                    }
+                    else
+                    {
+                        // position map so every marker is visible
+                        mapManager.position = .automatic
                     }
                     
-                    print("no response")
-                    return
-                }
-                
-                DispatchQueue.main.async
-                {
-                    withAnimation
-                    {
-                        // only add found items if they are inside the current map coordinate region
-                        searchResults = response.mapItems.filter({ region.contains($0.placemark.coordinate) })
-                        
-                        if searchResults.isEmpty
-                        {
-                            // center map around user location
-                            mapManager.position = .userLocation(fallback: .automatic)
-                        }
-                        else
-                        {
-                            // position map so every marker is visible
-                            mapManager.position = .automatic
-                        }
-                        
-                        print("showing results with animation")
-                    }
+                    print("* Found '\(searchResults.count)' items for category '\(tag.name)'")
                 }
             }
         }
@@ -129,7 +101,20 @@ struct TagMap: View
         .mapControls { }
         .mapScope(mapScope)
     }
+    
+    func resetMap()
+    {
+        withAnimation
+        {
+            // remove all map markers
+            searchResults = []
+            // reset map
+            mapManager.position = .userLocation(fallback: .automatic)
+        }
+    }
 }
+
+
 
 extension View
 {
