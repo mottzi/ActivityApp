@@ -4,6 +4,8 @@ import SwiftUI
 @Observable class TagManager
 {
     var allTags: [OSMTag] = OSMTag.allTags
+    var selectedTags: [OSMTag] { allTags.filter({ $0.isSelected }) }
+    
     var currentTag: OSMTag?
     
     public func toggleTag(tag: OSMTag)
