@@ -3,28 +3,30 @@ import MapKit
 
 struct HorizontalTagPicker: View
 {
-    @Binding var tagManager: TagManager
-    
+    @Environment(AppManager.self) var appManager
+
     var body: some View
     {
+        @Bindable var appManager = appManager
+
         ScrollView(.horizontal)
         {
             HStack
             {
-                ForEach(tagManager.allTags, id: \.self)
+                ForEach(appManager.tagManager.allTags, id: \.self)
                 { tag in
-                    TagButton(tag: tag, tagManager: $tagManager)
+                    TagButton(tag: tag)
                 }
             }
             .scrollTargetLayout()
         }
-        .scrollPosition(id: $tagManager.currentTag, anchor: .leading)
+        .scrollPosition(id: $appManager.tagManager.currentTag, anchor: .leading)
         .scrollIndicators(.never)
         .contentMargins(.horizontal, 16)
         .onAppear
         {
-            tagManager.currentTag = tagManager.allTags.last
-            tagManager.currentTag = tagManager.allTags.first
+            appManager.tagManager.currentTag = appManager.tagManager.allTags.last
+            appManager.tagManager.currentTag = appManager.tagManager.allTags.first
         }
     }
 }

@@ -3,7 +3,8 @@ import SwiftUI
 struct TagButton: View
 {
     let tag: OSMTag
-    @Binding var tagManager: TagManager
+    
+    @Environment(AppManager.self) var appManager
     
     var body: some View
     {
@@ -16,14 +17,13 @@ struct TagButton: View
             .sensoryFeedback(.selection, trigger: isSelected)
             .onTapGesture
         {
-            tagManager.toggleTag(tag: tag)
+            appManager.tagManager.toggleTag(tag: tag)
         }
     }
     
-    @MainActor
     var isSelected: Bool
     {
-        return tagManager.allTags.first(where: { $0.id == tag.id })?.isSelected ?? false
+        return appManager.tagManager.allTags.first(where: { $0.id == tag.id })?.isSelected ?? false
     }
 }
 
@@ -36,7 +36,7 @@ extension TagButton
             Text(tag.name)
                 .fontWeight(.medium)
         }
-    icon:
+        icon:
         {
             Image(systemName: tag.icon)
                 .resizable()
