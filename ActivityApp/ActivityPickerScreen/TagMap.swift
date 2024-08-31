@@ -4,38 +4,36 @@ import MapKit
 struct TagMap: View
 {
     @Environment(\.scenePhase) var scenePhase
-    @Environment(AppManager.self) var appManager
-        
     @Namespace var mapScope
+    
+    @Bindable var mapManager: MapManager
         
     var body: some View
     {
-        @Bindable var appManager = appManager
-        
-        Map(position: $appManager.mapManager.position, scope: mapScope)
+        Map(position: $mapManager.position, scope: mapScope)
         {
             UserAnnotation()
                
             let _ = Self._printChanges()
             
-            ForEach(appManager.mapManager.searchResults, id: \.self.mapItem)
+            ForEach(mapManager.searchResults, id: \.self.mapItem)
             { result in
                 Marker(item: result.mapItem)
             }
         }
-        .onMapChange(mapManager: appManager.mapManager, appManager.tagManager.scrollToFirst)
+        .onMapChange(mapManager: mapManager, mapManager.tagManager?.scrollToFirst)
         .onMapCameraChange(frequency: .onEnd)
         {
-            appManager.mapManager.region = $0.region
+            mapManager.region = $0.region
 //            mapManager.camera = $0.camera
         }
-        .onAppear(perform: appManager.mapManager.requestAuthorization)
+        .onAppear(perform: mapManager.requestAuthorization)
         .onChange(of: scenePhase)
         {
             guard scenePhase == .active else { return }
             
-            appManager.mapManager.requestAuthorization()
-            appManager.mapManager.resetToUserLocation()
+            mapManager.requestAuthorization()
+            mapManager.resetToUserLocation()
         }
         .overlay(alignment: .bottomTrailing)
         {
@@ -63,15 +61,23 @@ struct TagMap: View
 
 extension View
 {
-    func onMapChange(mapManager: MapManager, _ action: @escaping () -> Void) -> some View
+    @ViewBuilder
+    func onMapChange(mapManager: MapManager, _ action: (() -> Void)?) -> some View
     {
-        self
-            .onChange(of: mapManager.position.followsUserLocation, action)
-            .onChange(of: mapManager.position.followsUserHeading, action)
-            .onMapCameraChange(frequency: .continuous)
-            {
-                if mapManager.position.positionedByUser { action() }
-            }
+        if let action
+        {
+            self
+                .onChange(of: mapManager.position.followsUserLocation, action)
+                .onChange(of: mapManager.position.followsUserHeading, action)
+                .onMapCameraChange(frequency: .continuous)
+                {
+                    if mapManager.position.positionedByUser { action() }
+                }
+        }
+        else
+        {
+            self
+        }
     }
 }
 
