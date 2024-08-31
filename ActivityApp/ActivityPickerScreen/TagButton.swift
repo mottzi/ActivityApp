@@ -4,7 +4,7 @@ struct TagButton: View
 {
     let tag: OSMTag
     
-    @Environment(AppManager.self) var appManager
+    let tagManager: TagManager
     
     var body: some View
     {
@@ -16,14 +16,14 @@ struct TagButton: View
             .geometryGroup()
             .sensoryFeedback(.selection, trigger: isSelected)
             .onTapGesture
-        {
-            appManager.tagManager.toggleTag(tag: tag)
-        }
+            {
+                tagManager.toggleTag(tag: tag)
+            }
     }
     
     var isSelected: Bool
     {
-        return appManager.tagManager.allTags.first(where: { $0.id == tag.id })?.isSelected ?? false
+        return tagManager.allTags.first(where: { $0.id == tag.id })?.isSelected ?? false
     }
 }
 

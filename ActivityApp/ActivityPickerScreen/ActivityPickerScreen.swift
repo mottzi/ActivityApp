@@ -1,46 +1,35 @@
 import SwiftUI
 import MapKit
 
-@Observable class AppManager
-{
-    @ObservationIgnored var tagManager: TagManager
-    @ObservationIgnored var mapManager: MapManager
-    
-    init(tagManager: TagManager, mapManager: MapManager) 
-    {
-        self.tagManager = tagManager
-        self.mapManager = mapManager
-    }
-}
-
 struct ActivityPickerScreen: View
 {
-    @State private var appManager: AppManager
+    @State private var tagManager: TagManager
+    @State private var mapManager: MapManager
     
     init()
     {
         let tagManager = TagManager()
         let mapManager = MapManager()
         
-        _appManager = State(initialValue: .init(tagManager: tagManager, mapManager: mapManager))
+        tagManager.mapManager = mapManager
+        mapManager.tagManager = tagManager
         
-        tagManager.appManager = appManager
-        mapManager.appManager = appManager
+        _tagManager = State(initialValue: tagManager)
+        _mapManager = State(initialValue: mapManager)
     }
     
     var body: some View
     {
-        TagMap()
+        TagMap(mapManager: mapManager)
             .overlay(alignment: .top)
             {
                 VStack(spacing: 0)
                 {
                     SearchBar()
-                    HorizontalTagPicker()
+                    HorizontalTagPicker(tagManager: tagManager)
                 }
                 .padding(.top, 6)
             }
-            .environment(appManager)
     }
 }
 
