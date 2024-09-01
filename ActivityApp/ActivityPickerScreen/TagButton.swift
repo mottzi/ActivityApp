@@ -33,7 +33,7 @@ extension TagButton
     {
         Label
         {
-            Text(tag.name)
+            Text(tag.title)
                 .fontWeight(.medium)
         }
         icon:

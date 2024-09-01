@@ -24,7 +24,7 @@ import MapKit
     public func toggleMapMarkers(for tag: OSMTag)
     {
         guard let region,
-              let category = tag.category
+              let category = tag.apple
         else { return }
 
         if tag.isSelected
@@ -40,7 +40,7 @@ import MapKit
     private func addMapMarkers(for tag: OSMTag, category: [MKPointOfInterestCategory], region: MKCoordinateRegion)
     {
         let request = MKLocalSearch.Request()
-        request.naturalLanguageQuery = tag.name
+        request.naturalLanguageQuery = tag.title
         request.resultTypes = .pointOfInterest
         request.pointOfInterestFilter = MKPointOfInterestFilter(including: category)
         request.region = region

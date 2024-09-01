@@ -19,6 +19,7 @@
 		9A14563E2C7E98A7001CD8F9 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A14563D2C7E98A7001CD8F9 /* SearchBar.swift */; };
 		9A1456402C7E98B7001CD8F9 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A14563F2C7E98B7001CD8F9 /* TagButton.swift */; };
 		9A1456422C7E98C0001CD8F9 /* TagMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1456412C7E98C0001CD8F9 /* TagMap.swift */; };
+		9A4D13D22C83E319009BE4C8 /* OSMManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D13D12C83E319009BE4C8 /* OSMManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		9A14563D2C7E98A7001CD8F9 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		9A14563F2C7E98B7001CD8F9 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		9A1456412C7E98C0001CD8F9 /* TagMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMap.swift; sourceTree = "<group>"; };
+		9A4D13D12C83E319009BE4C8 /* OSMManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSMManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 			children = (
 				9A1456372C7E9868001CD8F9 /* TagManager.swift */,
 				9A1456352C7E985C001CD8F9 /* MapManager.swift */,
+				9A4D13D12C83E319009BE4C8 /* OSMManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -177,6 +180,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A1456422C7E98C0001CD8F9 /* TagMap.swift in Sources */,
+				9A4D13D22C83E319009BE4C8 /* OSMManager.swift in Sources */,
 				9A14563C2C7E989E001CD8F9 /* HorizontalTagPicker.swift in Sources */,
 				9A14563A2C7E9885001CD8F9 /* ActivityPickerScreen.swift in Sources */,
 				9A1456402C7E98B7001CD8F9 /* TagButton.swift in Sources */,

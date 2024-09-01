@@ -24,7 +24,7 @@ import MapKit
         // toggle the tag's isSelected property
         allTags[index].isSelected.toggle()
         let tag = allTags[index]
-        
+
         // sort tags based on isSelected
         sortTags()
         

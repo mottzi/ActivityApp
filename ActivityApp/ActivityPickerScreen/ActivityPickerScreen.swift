@@ -6,18 +6,6 @@ struct ActivityPickerScreen: View
     @State private var tagManager: TagManager
     @State private var mapManager: MapManager
     
-    init()
-    {
-        let tagManager = TagManager()
-        let mapManager = MapManager()
-        
-        tagManager.mapManager = mapManager
-        mapManager.tagManager = tagManager
-        
-        _tagManager = State(initialValue: tagManager)
-        _mapManager = State(initialValue: mapManager)
-    }
-    
     var body: some View
     {
         TagMap(mapManager: mapManager)
@@ -30,6 +18,18 @@ struct ActivityPickerScreen: View
                 }
                 .padding(.top, 6)
             }
+    }
+    
+    init()
+    {
+        let tagManager = TagManager()
+        let mapManager = MapManager()
+        
+        tagManager.mapManager = mapManager
+        mapManager.tagManager = tagManager
+        
+        _tagManager = State(initialValue: tagManager)
+        _mapManager = State(initialValue: mapManager)
     }
 }
 
