@@ -16,9 +16,15 @@ struct TagMap: View
                
 //            let _ = Self._printChanges()
             
-            ForEach(mapManager.searchResults, id: \.self.mapItem)
+            ForEach(mapManager.appleSearchResults, id: \.self.mapItem)
             { result in
                 Marker(item: result.mapItem)
+            }
+            
+            ForEach(mapManager.osmSearchResults)
+            { result in
+//                Marker(item: result.mapItem)
+                Marker(result.name, coordinate: result.coordinate)
             }
         }
         .onMapChange(mapManager: mapManager, mapManager.tagManager?.scrollToFirst)

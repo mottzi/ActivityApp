@@ -1,7 +1,15 @@
 import SwiftUI
 import MapKit
 
-class OSMManager
+struct OSMMapTagItem: Identifiable
+{
+    var id = UUID()
+    var name: String
+    var coordinate: CLLocationCoordinate2D
+    var tag: OSMTag
+}
+
+class OSM
 {
     static func buildQuery(for tag: OSMTag, region: MKCoordinateRegion) -> String?
     {
@@ -16,15 +24,15 @@ class OSMManager
         {
             if let value = pair.value
             {
-                query += "node[\"name\"][\"\(pair.name)\"=\"\(value)\"];"
+                query += "nwr[\"name\"][\"\(pair.name)\"=\"\(value)\"];"
             }
             else
             {
-                query += "node[\"name\"][\"\(pair.name)\"];"
+                query += "nwr[\"name\"][\"\(pair.name)\"];"
             }
         }
         
-        query += ");out body;"
+        query += ");out center;"
         
         return query
     }
