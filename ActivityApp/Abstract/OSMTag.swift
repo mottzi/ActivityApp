@@ -7,7 +7,7 @@ struct OSMTag: Identifiable, Hashable
     let title: String
     var icon: String = "circle"
     var isSelected: Bool = false
-    var osm: [OSMPairs]? = nil
+    var osm: [OSMPair]? = nil
     var apple: [MKPointOfInterestCategory]? = nil
 }
 
@@ -25,7 +25,7 @@ extension OSMTag
     ]
 }
 
-struct OSMPairs: Hashable
+struct OSMPair: Hashable
 {
     var name: String
     var value: String?

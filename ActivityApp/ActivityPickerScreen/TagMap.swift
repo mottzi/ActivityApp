@@ -14,7 +14,7 @@ struct TagMap: View
         {
             UserAnnotation()
                
-            let _ = Self._printChanges()
+//            let _ = Self._printChanges()
             
             ForEach(mapManager.searchResults, id: \.self.mapItem)
             { result in
@@ -25,7 +25,6 @@ struct TagMap: View
         .onMapCameraChange(frequency: .onEnd)
         {
             mapManager.region = $0.region
-//            mapManager.camera = $0.camera
         }
         .onAppear(perform: mapManager.requestAuthorization)
         .onChange(of: scenePhase)
@@ -48,10 +47,10 @@ struct TagMap: View
             .shadow(color: .black.opacity(0.1), radius: 2, y: 2)
             .mapControlVisibility(.visible)
         }
-//        .overlay(alignment: .bottom)
-//        {
-//            CoordinateCapsule(camera: mapManager.camera)
-//        }
+        // .overlay(alignment: .bottom)
+        // {
+        //     CoordinateCapsule(camera: mapManager.camera)
+        // }
         .ignoresSafeArea(.keyboard)
         .mapStyle(.standard(elevation: .realistic, pointsOfInterest: .excludingAll))
         .mapControls { }
