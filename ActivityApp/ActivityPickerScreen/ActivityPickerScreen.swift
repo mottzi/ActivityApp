@@ -14,7 +14,7 @@ struct ActivityPickerScreen: View
                 VStack(spacing: 0)
                 {
                     SearchBar()
-                    CategoryPicker(tagManager: categoryManager)
+                    CategoryPicker(categoryManager: categoryManager)
                 }
                 .padding(.top, 6)
             }

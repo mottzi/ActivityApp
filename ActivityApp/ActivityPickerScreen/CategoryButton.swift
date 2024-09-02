@@ -2,9 +2,9 @@ import SwiftUI
 
 struct CategoryButton: View
 {
-    let tag: MapCategory
+    let category: MapCategory
     
-    let tagManager: CategoryManager
+    let categoryManager: CategoryManager
     
     var body: some View
     {
@@ -17,13 +17,13 @@ struct CategoryButton: View
             .sensoryFeedback(.selection, trigger: isSelected)
             .onTapGesture
             {
-                tagManager.toggleCategory(category: tag)
+                categoryManager.toggleCategory(category: category)
             }
     }
     
     var isSelected: Bool
     {
-        return tagManager.allCategories.first(where: { $0.id == tag.id })?.isSelected ?? false
+        return categoryManager.allCategories.first(where: { $0.id == category.id })?.isSelected ?? false
     }
 }
 
@@ -33,12 +33,12 @@ extension CategoryButton
     {
         Label
         {
-            Text(tag.title)
+            Text(category.title)
                 .fontWeight(.medium)
         }
         icon:
         {
-            Image(systemName: tag.icon)
+            Image(systemName: category.icon)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 18, height: 18)
@@ -55,7 +55,7 @@ extension CategoryButton
     {
         ZStack
         {
-            if tag.isSelected
+            if category.isSelected
             {
                 Color.blue
                     .brightness(0.3)

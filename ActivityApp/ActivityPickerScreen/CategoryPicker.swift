@@ -3,7 +3,7 @@ import MapKit
 
 struct CategoryPicker: View
 {
-    @Bindable var tagManager: CategoryManager
+    @Bindable var categoryManager: CategoryManager
 
     var body: some View
     {
@@ -11,20 +11,20 @@ struct CategoryPicker: View
         {
             HStack
             {
-                ForEach(tagManager.allCategories, id: \.self)
-                { tag in
-                    CategoryButton(tag: tag, tagManager: tagManager)
+                ForEach(categoryManager.allCategories, id: \.self)
+                { category in
+                    CategoryButton(category: category, categoryManager: categoryManager)
                 }
             }
             .scrollTargetLayout()
         }
-        .scrollPosition(id: $tagManager.currentCategory, anchor: .leading)
+        .scrollPosition(id: $categoryManager.currentCategory, anchor: .leading)
         .scrollIndicators(.never)
         .contentMargins(.horizontal, 16)
         .onAppear
         {
-            tagManager.currentCategory = tagManager.allCategories.last
-            tagManager.currentCategory = tagManager.allCategories.first
+            categoryManager.currentCategory = categoryManager.allCategories.last
+            categoryManager.currentCategory = categoryManager.allCategories.first
         }
     }
 }
