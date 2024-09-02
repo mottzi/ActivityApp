@@ -1,15 +1,15 @@
 import SwiftUI
 
-struct FilterButton: View
+struct CategoryButton: View
 {
-    let tag: MapFilter
+    let tag: MapCategory
     
-    let tagManager: FilterManager
+    let tagManager: CategoryManager
     
     var body: some View
     {
-        filterLabel
-            .background { filterBackground }
+        categoryLabel
+            .background { categoryBackground }
             .padding(.vertical, 14)
             .padding(.bottom, 30)
             .contentShape(.rect)
@@ -17,19 +17,19 @@ struct FilterButton: View
             .sensoryFeedback(.selection, trigger: isSelected)
             .onTapGesture
             {
-                tagManager.toggleTag(tag: tag)
+                tagManager.toggleCategory(category: tag)
             }
     }
     
     var isSelected: Bool
     {
-        return tagManager.allTags.first(where: { $0.id == tag.id })?.isSelected ?? false
+        return tagManager.allCategories.first(where: { $0.id == tag.id })?.isSelected ?? false
     }
 }
 
-extension FilterButton
+extension CategoryButton
 {
-    var filterLabel: some View
+    var categoryLabel: some View
     {
         Label
         {
@@ -51,7 +51,7 @@ extension FilterButton
         .foregroundStyle(.black)
     }
     
-    var filterBackground: some View
+    var categoryBackground: some View
     {
         ZStack
         {

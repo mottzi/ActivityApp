@@ -1,29 +1,37 @@
 import SwiftUI
 import MapKit
 
-struct OSMMapTagItem: Identifiable
+/// A type that represents a OSM map item that has been fetched using a category filter.
+struct OSMFilteredMapItem: Identifiable
 {
     var id = UUID()
     var name: String
     var coordinate: CLLocationCoordinate2D
-    var tag: MapFilter
+    var category: MapCategory
 }
 
+/// Make requests to the OSM OverPass API to fetch POI using category and coordinate region filters.
 class OSMRequest
 {
-    var tag: MapFilter
+    var category: MapCategory
     var region: MKCoordinateRegion
     
-    init(for tag: MapFilter, region: MKCoordinateRegion)
+    init(for category: MapCategory, region: MKCoordinateRegion)
     {
-        self.tag = tag
+        self.category = category
         self.region = region
     }
     
-    func start() async -> [OSMMapTagItem]?
+    /// Runs the request.
+    /// - Returns: Array of ``OSMFilteredMapItem`` that contains the POIs that matched at least one of the category filters and the coordinate region filter. If an error occured or no POIs were found, `nil` is returned.
+    func start() async -> [OSMFilteredMapItem]?
     {
+        // make sure we have OSM categories
+        guard let categories = self.category.osmCategories else { return nil }
+        guard !categories.isEmpty else { return nil }
+        
         // prepare query string
-        guard let rawQuery = OSMQuery.buildQuery(for: self.tag, region: self.region),
+        guard let rawQuery = OSMQuery.buildQuery(using: categories, region: self.region),
               let query = rawQuery.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
               let urlQuery = URL(string: "https://overpass-api.de/api/interpreter?data=\(query)")
         else { return nil }
@@ -40,7 +48,7 @@ class OSMRequest
               let elements = json["elements"] as? [[String: Any]]
         else { return nil }
         
-        var parsedElements: [OSMMapTagItem] = []
+        var parsedElements: [OSMFilteredMapItem] = []
         
         // loop over all elements
         for element in elements
@@ -66,7 +74,7 @@ class OSMRequest
             
             guard let coordinate else { continue }
             
-            let mapItem = OSMMapTagItem(name: name, coordinate: coordinate, tag: self.tag)
+            let mapItem = OSMFilteredMapItem(name: name, coordinate: coordinate, category: self.category)
             
             parsedElements.append(mapItem)
         }

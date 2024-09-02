@@ -3,14 +3,14 @@ import MapKit
 
 @Observable class MapManager
 {    
-    weak var filterManager: FilterManager?
+    weak var categoryManager: CategoryManager?
     
     @ObservationIgnored let locationManager = CLLocationManager()
     @ObservationIgnored var position: MapCameraPosition = .userLocation(fallback: .automatic)
     @ObservationIgnored var region: MKCoordinateRegion?
     
-    var appleSearchResults: [MKMapTagItem] = []
-    var osmSearchResults: [OSMMapTagItem] = []
+    var appleSearchResults: [MKFilteredMapItem] = []
+    var osmSearchResults: [OSMFilteredMapItem] = []
 
     public func requestAuthorization()
     {
@@ -22,18 +22,18 @@ import MapKit
         withAnimation { position = .userLocation(fallback: .automatic) }
     }
     
-    public func toggleMapMarkers(for tag: MapFilter)
+    public func toggleMapMarkers(for category: MapCategory)
     {
         guard let region else { return }
 
-        if tag.isSelected
+        if category.isSelected
         {
-            addMapMarkers(for: tag, region: region, platform: .apple)
-            addMapMarkers(for: tag, region: region, platform: .osm)
+            addMapMarkers(for: category, region: region, platform: .apple)
+            addMapMarkers(for: category, region: region, platform: .osm)
         }
         else
         {
-            removeMapMarkers(for: tag)
+            removeMapMarkers(for: category)
         }
     }
 }
@@ -46,18 +46,18 @@ extension MapManager
         case osm
     }
         
-    private func addMapMarkers(for tag: MapFilter, region: MKCoordinateRegion, platform: MapPlatform)
+    private func addMapMarkers(for category: MapCategory, region: MKCoordinateRegion, platform: MapPlatform)
     {
         switch platform
         {
-            case .apple: addMapMarkersApple(for: tag, region: region)
-            case .osm: addMapMarkersOSM(for: tag, region: region)
+            case .apple: addMapMarkersApple(for: category, region: region)
+            case .osm: addMapMarkersOSM(for: category, region: region)
         }
     }
 
-    private func addMapMarkersOSM(for tag: MapFilter, region: MKCoordinateRegion)
+    private func addMapMarkersOSM(for category: MapCategory, region: MKCoordinateRegion)
     {
-        let request = OSMRequest(for: tag, region: region)
+        let request = OSMRequest(for: category, region: region)
         
         Task.detached
         {
@@ -70,9 +70,9 @@ extension MapManager
         }
     }
     
-    private func addMapMarkersApple(for tag: MapFilter, region: MKCoordinateRegion)
+    private func addMapMarkersApple(for category: MapCategory, region: MKCoordinateRegion)
     {
-        let request = AppleRequest(for: tag, region: region)
+        let request = AppleRequest(with: category, region: region)
         
         Task.detached
         {
@@ -85,10 +85,10 @@ extension MapManager
         }
     }
     
-    private func removeMapMarkers(for tag: MapFilter)
+    private func removeMapMarkers(for category: MapCategory)
     {
-        appleSearchResults = appleSearchResults.filter { return $0.tag.id != tag.id }
-        osmSearchResults = osmSearchResults.filter { return $0.tag.id != tag.id }
+        appleSearchResults = appleSearchResults.filter { return $0.category.id != category.id }
+        osmSearchResults = osmSearchResults.filter { return $0.category.id != category.id }
     }
 }
 

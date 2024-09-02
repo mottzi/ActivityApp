@@ -1,30 +1,34 @@
 import SwiftUI
 import MapKit
 
-struct MKMapTagItem: Identifiable
+/// A type that represents an Apple Maps map item that has been fetched using a category filter.
+struct MKFilteredMapItem: Identifiable
 {
     let id = UUID()
     let mapItem: MKMapItem
-    let tag: MapFilter
+    let category: MapCategory
 }
 
+/// Make local rearch requests to Apple Maps to fetch POI using category and coordinate region filters.
 class AppleRequest
 {
-    var tag: MapFilter
+    var filter: MapCategory
     var region: MKCoordinateRegion
     
-    init(for tag: MapFilter, region: MKCoordinateRegion)
+    init(with filter: MapCategory, region: MKCoordinateRegion)
     {
-        self.tag = tag
+        self.filter = filter
         self.region = region
     }
     
-    func start() async -> [MKMapTagItem]?
+    /// Runs the request.
+    /// - Returns: Array of ``OSMFilteredMapItem`` that contains the POIs that matched at least one of the category filters and the coordinate region filter. If an error occured or no POIs were found, `nil` is returned.
+    func start() async -> [MKFilteredMapItem]?
     {
-        guard let category = tag.apple else { return nil }
+        guard let category = filter.appleCategories else { return nil }
         
         let request = MKLocalSearch.Request()
-        request.naturalLanguageQuery = tag.title
+        request.naturalLanguageQuery = filter.title
         request.resultTypes = .pointOfInterest
         request.pointOfInterestFilter = MKPointOfInterestFilter(including: category)
         request.region = region
@@ -33,7 +37,7 @@ class AppleRequest
         
         let result = response.mapItems.filter({ region.contains($0.placemark.coordinate) })
         
-        let taggedResult = result.map { MKMapTagItem(mapItem: $0, tag: tag) }
+        let taggedResult = result.map { MKFilteredMapItem(mapItem: $0, category: filter) }
         
         guard !taggedResult.isEmpty else { return nil }
         

@@ -1,7 +1,7 @@
 import SwiftUI
 import MapKit
 
-struct FilterMap: View
+struct CategoryMap: View
 {
     @Environment(\.scenePhase) var scenePhase
     @Namespace var mapScope
@@ -24,7 +24,7 @@ struct FilterMap: View
                 Marker(result.name, coordinate: result.coordinate)
             }
         }
-        .onMapChange(mapManager: mapManager, mapManager.filterManager?.scrollToFirst)
+        .onMapChange(mapManager: mapManager, mapManager.categoryManager?.scrollToFirst)
         .onMapCameraChange(frequency: .onEnd)
         {
             mapManager.region = $0.region
