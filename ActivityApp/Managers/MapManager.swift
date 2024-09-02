@@ -1,9 +1,11 @@
 import SwiftUI
 import MapKit
 
+
+
 @Observable class MapManager
 {    
-    weak var tagManager: TagManager?
+    weak var filterManager: FilterManager?
     
     @ObservationIgnored let locationManager = CLLocationManager()
     @ObservationIgnored var position: MapCameraPosition = .userLocation(fallback: .automatic)
@@ -22,104 +24,78 @@ import MapKit
         withAnimation { position = .userLocation(fallback: .automatic) }
     }
     
-    public func toggleMapMarkers(for tag: OSMTag)
+    public func toggleMapMarkers(for tag: MapFilter)
     {
         guard let region else { return }
 
         if tag.isSelected
         {
-            addMapMarkers(for: tag, region: region)
-            addMapMarkersOSM(for: tag, region: region)
+            addMapMarkers(for: tag, region: region, platform: .apple)
+            addMapMarkers(for: tag, region: region, platform: .osm)
         }
         else
         {
             removeMapMarkers(for: tag)
         }
     }
-    
-    private func addMapMarkersOSM(for tag: OSMTag, region: MKCoordinateRegion)
-    {
-        // prepare query string
-        guard let rawQuery = OSM.buildQuery(for: tag, region: region),
-              let query = rawQuery.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-              let urlQuery = URL(string: "https://overpass-api.de/api/interpreter?data=\(query)")
-        else { return }
+}
 
-        // prepare GET http request
-        var request = URLRequest(url: urlQuery)
-        request.httpMethod = "GET"
+extension MapManager
+{
+
+
+    private func addMapMarkers(for tag: MapFilter, region: MKCoordinateRegion, platform: MapPlatform)
+    {
+        switch platform
+        {
+            case .apple: addMapMarkersApple(for: tag, region: region)
+            case .osm: addMapMarkersOSM(for: tag, region: region)
+        }
+    }
+
+    private func addMapMarkersOSM(for tag: MapFilter, region: MKCoordinateRegion)
+    {
+        let request = OSMRequest(for: tag, region: region)
         
-        var mapItems: [OSMMapTagItem] = []
-        
-        // start request
-        let task = URLSession.shared.dataTask(with: request)
-        { data, response, error in
-            if error != nil { return }
-            guard let data else { return }
-            
-            // make sure tag is still selected
-            guard let tagManager = self.tagManager,
-                  let index = tagManager.allTags.firstIndex(of: tag),
-                  tagManager.allTags[index].isSelected == true
-            else { return }
-            
-            // try to access elements array
-            guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-                  let elements = json["elements"] as? [[String: Any]]
-            else { return }
-            
-            // loop over all elements
-            for element in elements
-            {
-                // try to access name tag
-                guard let tags = element["tags"] as? [String: String],
-                      let name = tags["name"]
-                else { continue }
-                
-                var coordinate: CLLocationCoordinate2D?
-                
-                // save coordinate for node type
-                if let lat = element["lat"] as? Double, let lon = element["lon"] as? Double
-                {
-                    coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-                }
-                // save center-coordinate for way type
-                else if let center = element["center"] as? [String: Double],
-                        let lat = center["lat"], let lon = center["lon"]
-                {
-                    coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-                }
-                
-                guard let coordinate else { return }
-                
-                let mapItem = OSMMapTagItem(name: name, coordinate: coordinate, tag: tag)
-                mapItems.append(mapItem)
-            }
+        Task.detached
+        {
+            guard let foundItems = await request.start() else { return }
             
             DispatchQueue.main.async
             {
-                self.osmSearchResults.append(contentsOf: mapItems)
+                self.osmSearchResults.append(contentsOf: foundItems)
             }
         }
-                
-        task.resume()
     }
     
-    private func addMapMarkers(for tag: OSMTag, region: MKCoordinateRegion)
+    enum MapPlatform
+    {
+        case apple
+        case osm
+    }
+
+    struct MKMapTagItem: Identifiable
+    {
+        let id = UUID()
+        let mapItem: MKMapItem
+        let tag: MapFilter
+    }
+    
+    private func addMapMarkersApple(for tag: MapFilter, region: MKCoordinateRegion)
     {
         guard let category = tag.apple else { return }
-
+        
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = tag.title
         request.resultTypes = .pointOfInterest
         request.pointOfInterestFilter = MKPointOfInterestFilter(including: category)
         request.region = region
         
-        Task.detached 
+        Task.detached
         {
             guard let response = try? await MKLocalSearch(request: request).start() else { return }
             
-            guard let tagManager = self.tagManager,
+            guard let tagManager = self.filterManager,
                   let index = tagManager.allTags.firstIndex(of: tag),
                   tagManager.allTags[index].isSelected == true
             else { return }
@@ -137,7 +113,7 @@ import MapKit
         }
     }
     
-    private func removeMapMarkers(for tag: OSMTag)
+    private func removeMapMarkers(for tag: MapFilter)
     {
         appleSearchResults = appleSearchResults.filter { return $0.tag.id != tag.id }
         osmSearchResults = osmSearchResults.filter { return $0.tag.id != tag.id }
@@ -166,11 +142,4 @@ extension CLLocationCoordinate2D
     {
         return .init(latitude: 47.52255706015097, longitude: 7.691808136110408)
     }
-}
-
-
-struct MKMapTagItem: Hashable
-{
-    let mapItem: MKMapItem
-    let tag: OSMTag
 }

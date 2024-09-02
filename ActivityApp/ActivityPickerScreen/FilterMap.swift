@@ -1,7 +1,7 @@
 import SwiftUI
 import MapKit
 
-struct TagMap: View
+struct FilterMap: View
 {
     @Environment(\.scenePhase) var scenePhase
     @Namespace var mapScope
@@ -13,21 +13,18 @@ struct TagMap: View
         Map(position: $mapManager.position, scope: mapScope)
         {
             UserAnnotation()
-               
-//            let _ = Self._printChanges()
-            
-            ForEach(mapManager.appleSearchResults, id: \.self.mapItem)
+                           
+            ForEach(mapManager.appleSearchResults)
             { result in
                 Marker(item: result.mapItem)
             }
             
             ForEach(mapManager.osmSearchResults)
             { result in
-//                Marker(item: result.mapItem)
                 Marker(result.name, coordinate: result.coordinate)
             }
         }
-        .onMapChange(mapManager: mapManager, mapManager.tagManager?.scrollToFirst)
+        .onMapChange(mapManager: mapManager, mapManager.filterManager?.scrollToFirst)
         .onMapCameraChange(frequency: .onEnd)
         {
             mapManager.region = $0.region

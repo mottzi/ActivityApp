@@ -1,17 +1,9 @@
 import SwiftUI
 import MapKit
 
-struct OSMMapTagItem: Identifiable
+class OSMQuery
 {
-    var id = UUID()
-    var name: String
-    var coordinate: CLLocationCoordinate2D
-    var tag: OSMTag
-}
-
-class OSM
-{
-    static func buildQuery(for tag: OSMTag, region: MKCoordinateRegion) -> String?
+    static func buildQuery(for tag: MapFilter, region: MKCoordinateRegion) -> String?
     {
         guard let pairs = tag.osm else { return nil }
         guard !pairs.isEmpty else { return nil }
@@ -36,7 +28,10 @@ class OSM
         
         return query
     }
-    
+}
+
+extension OSMQuery
+{
     static func regionToBoundingBox(region: MKCoordinateRegion) -> (Double, Double, Double, Double)
     {
         // Calculate the span of the region

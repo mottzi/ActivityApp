@@ -3,18 +3,18 @@ import MapKit
 
 struct ActivityPickerScreen: View
 {
-    @State private var tagManager: TagManager
+    @State private var filterManager: FilterManager
     @State private var mapManager: MapManager
     
     var body: some View
     {
-        TagMap(mapManager: mapManager)
+        FilterMap(mapManager: mapManager)
             .overlay(alignment: .top)
             {
                 VStack(spacing: 0)
                 {
                     SearchBar()
-                    HorizontalTagPicker(tagManager: tagManager)
+                    FilterPicker(tagManager: filterManager)
                 }
                 .padding(.top, 6)
             }
@@ -22,13 +22,13 @@ struct ActivityPickerScreen: View
     
     init()
     {
-        let tagManager = TagManager()
+        let filterManager = FilterManager()
         let mapManager = MapManager()
         
-        tagManager.mapManager = mapManager
-        mapManager.tagManager = tagManager
+        filterManager.mapManager = mapManager
+        mapManager.filterManager = filterManager
         
-        _tagManager = State(initialValue: tagManager)
+        _filterManager = State(initialValue: filterManager)
         _mapManager = State(initialValue: mapManager)
     }
 }

@@ -1,15 +1,15 @@
 import SwiftUI
 
-struct TagButton: View
+struct FilterButton: View
 {
-    let tag: OSMTag
+    let tag: MapFilter
     
-    let tagManager: TagManager
+    let tagManager: FilterManager
     
     var body: some View
     {
-        tagLabel
-            .background { tagBackground }
+        filterLabel
+            .background { filterBackground }
             .padding(.vertical, 14)
             .padding(.bottom, 30)
             .contentShape(.rect)
@@ -27,9 +27,9 @@ struct TagButton: View
     }
 }
 
-extension TagButton
+extension FilterButton
 {
-    var tagLabel: some View
+    var filterLabel: some View
     {
         Label
         {
@@ -51,7 +51,7 @@ extension TagButton
         .foregroundStyle(.black)
     }
     
-    var tagBackground: some View
+    var filterBackground: some View
     {
         ZStack
         {

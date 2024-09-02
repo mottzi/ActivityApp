@@ -1,9 +1,9 @@
 import SwiftUI
 import MapKit
 
-struct HorizontalTagPicker: View
+struct FilterPicker: View
 {
-    @Bindable var tagManager: TagManager
+    @Bindable var tagManager: FilterManager
 
     var body: some View
     {
@@ -14,7 +14,7 @@ struct HorizontalTagPicker: View
             {
                 ForEach(tagManager.allTags, id: \.self)
                 { tag in
-                    TagButton(tag: tag, tagManager: tagManager)
+                    FilterButton(tag: tag, tagManager: tagManager)
                 }
             }
             .scrollTargetLayout()

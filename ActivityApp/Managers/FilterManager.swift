@@ -1,19 +1,19 @@
 import SwiftUI
 import MapKit
 
-@Observable class TagManager
+@Observable class FilterManager
 {
     weak var mapManager: MapManager?
     
-    var allTags: [OSMTag] = OSMTag.allTags
-    var selectedTags: [OSMTag] { allTags.filter({ $0.isSelected }) }
-    var currentTag: OSMTag?
+    var allTags: [MapFilter] = MapFilter.allFilters
+    var selectedTags: [MapFilter] { allTags.filter({ $0.isSelected }) }
+    var currentTag: MapFilter?
     
     /// Toggles the selection state of a tag.
     ///
     /// This will cause ``HorizontalTagPicker`` to be re-ordered and ``TagMap`` to load or remove the tag's map markers.
     /// - Parameter tag: The tag to toggle.
-    public func toggleTag(tag: OSMTag)
+    public func toggleTag(tag: MapFilter)
     {
         // find the tapped tag in allTags
         guard let index = allTags.firstIndex(of: tag) else
@@ -52,7 +52,7 @@ import MapKit
     }
 }
 
-extension TagManager
+extension FilterManager
 {
     enum TagManagerError: String
     {

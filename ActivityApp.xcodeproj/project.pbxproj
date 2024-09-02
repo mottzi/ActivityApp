@@ -7,36 +7,38 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A025CA32C85C22400001BE1 /* OSMRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A025CA22C85C22400001BE1 /* OSMRequest.swift */; };
 		9A1456202C7E97CC001CD8F9 /* ActivityApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A14561F2C7E97CC001CD8F9 /* ActivityApp.swift */; };
 		9A1456242C7E97CD001CD8F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A1456232C7E97CD001CD8F9 /* Assets.xcassets */; };
 		9A14562F2C7E981B001CD8F9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A14562E2C7E981B001CD8F9 /* Extensions.swift */; };
-		9A1456312C7E9825001CD8F9 /* OSMTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1456302C7E9825001CD8F9 /* OSMTag.swift */; };
+		9A1456312C7E9825001CD8F9 /* MapFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1456302C7E9825001CD8F9 /* MapFilter.swift */; };
 		9A1456332C7E9841001CD8F9 /* UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1456322C7E9841001CD8F9 /* UserLocation.swift */; };
 		9A1456362C7E985C001CD8F9 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1456352C7E985C001CD8F9 /* MapManager.swift */; };
-		9A1456382C7E9868001CD8F9 /* TagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1456372C7E9868001CD8F9 /* TagManager.swift */; };
+		9A1456382C7E9868001CD8F9 /* FilterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1456372C7E9868001CD8F9 /* FilterManager.swift */; };
 		9A14563A2C7E9885001CD8F9 /* ActivityPickerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1456392C7E9885001CD8F9 /* ActivityPickerScreen.swift */; };
-		9A14563C2C7E989E001CD8F9 /* HorizontalTagPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A14563B2C7E989E001CD8F9 /* HorizontalTagPicker.swift */; };
+		9A14563C2C7E989E001CD8F9 /* FilterPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A14563B2C7E989E001CD8F9 /* FilterPicker.swift */; };
 		9A14563E2C7E98A7001CD8F9 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A14563D2C7E98A7001CD8F9 /* SearchBar.swift */; };
-		9A1456402C7E98B7001CD8F9 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A14563F2C7E98B7001CD8F9 /* TagButton.swift */; };
-		9A1456422C7E98C0001CD8F9 /* TagMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1456412C7E98C0001CD8F9 /* TagMap.swift */; };
-		9A4D13D22C83E319009BE4C8 /* OSM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D13D12C83E319009BE4C8 /* OSM.swift */; };
+		9A1456402C7E98B7001CD8F9 /* FilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A14563F2C7E98B7001CD8F9 /* FilterButton.swift */; };
+		9A1456422C7E98C0001CD8F9 /* FilterMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1456412C7E98C0001CD8F9 /* FilterMap.swift */; };
+		9A4D13D22C83E319009BE4C8 /* OSMQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D13D12C83E319009BE4C8 /* OSMQuery.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9A025CA22C85C22400001BE1 /* OSMRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSMRequest.swift; sourceTree = "<group>"; };
 		9A14561C2C7E97CC001CD8F9 /* ActivityApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActivityApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A14561F2C7E97CC001CD8F9 /* ActivityApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityApp.swift; sourceTree = "<group>"; };
 		9A1456232C7E97CD001CD8F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9A14562E2C7E981B001CD8F9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		9A1456302C7E9825001CD8F9 /* OSMTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSMTag.swift; sourceTree = "<group>"; };
+		9A1456302C7E9825001CD8F9 /* MapFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFilter.swift; sourceTree = "<group>"; };
 		9A1456322C7E9841001CD8F9 /* UserLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocation.swift; sourceTree = "<group>"; };
 		9A1456352C7E985C001CD8F9 /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
-		9A1456372C7E9868001CD8F9 /* TagManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagManager.swift; sourceTree = "<group>"; };
+		9A1456372C7E9868001CD8F9 /* FilterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterManager.swift; sourceTree = "<group>"; };
 		9A1456392C7E9885001CD8F9 /* ActivityPickerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityPickerScreen.swift; sourceTree = "<group>"; };
-		9A14563B2C7E989E001CD8F9 /* HorizontalTagPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalTagPicker.swift; sourceTree = "<group>"; };
+		9A14563B2C7E989E001CD8F9 /* FilterPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPicker.swift; sourceTree = "<group>"; };
 		9A14563D2C7E98A7001CD8F9 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
-		9A14563F2C7E98B7001CD8F9 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
-		9A1456412C7E98C0001CD8F9 /* TagMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMap.swift; sourceTree = "<group>"; };
-		9A4D13D12C83E319009BE4C8 /* OSM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSM.swift; sourceTree = "<group>"; };
+		9A14563F2C7E98B7001CD8F9 /* FilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButton.swift; sourceTree = "<group>"; };
+		9A1456412C7E98C0001CD8F9 /* FilterMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterMap.swift; sourceTree = "<group>"; };
+		9A4D13D12C83E319009BE4C8 /* OSMQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSMQuery.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +52,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9A025CA12C85C20600001BE1 /* OSM */ = {
+			isa = PBXGroup;
+			children = (
+				9A4D13D12C83E319009BE4C8 /* OSMQuery.swift */,
+				9A025CA22C85C22400001BE1 /* OSMRequest.swift */,
+			);
+			path = OSM;
+			sourceTree = "<group>";
+		};
 		9A1456132C7E97CC001CD8F9 = {
 			isa = PBXGroup;
 			children = (
@@ -81,9 +92,10 @@
 			isa = PBXGroup;
 			children = (
 				9A14561F2C7E97CC001CD8F9 /* ActivityApp.swift */,
-				9A1456302C7E9825001CD8F9 /* OSMTag.swift */,
+				9A1456302C7E9825001CD8F9 /* MapFilter.swift */,
 				9A1456322C7E9841001CD8F9 /* UserLocation.swift */,
 				9A14562E2C7E981B001CD8F9 /* Extensions.swift */,
+				9A025CA12C85C20600001BE1 /* OSM */,
 			);
 			path = Abstract;
 			sourceTree = "<group>";
@@ -91,9 +103,8 @@
 		9A1456342C7E984D001CD8F9 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				9A1456372C7E9868001CD8F9 /* TagManager.swift */,
+				9A1456372C7E9868001CD8F9 /* FilterManager.swift */,
 				9A1456352C7E985C001CD8F9 /* MapManager.swift */,
-				9A4D13D12C83E319009BE4C8 /* OSM.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -102,10 +113,10 @@
 			isa = PBXGroup;
 			children = (
 				9A1456392C7E9885001CD8F9 /* ActivityPickerScreen.swift */,
-				9A1456412C7E98C0001CD8F9 /* TagMap.swift */,
+				9A1456412C7E98C0001CD8F9 /* FilterMap.swift */,
 				9A14563D2C7E98A7001CD8F9 /* SearchBar.swift */,
-				9A14563B2C7E989E001CD8F9 /* HorizontalTagPicker.swift */,
-				9A14563F2C7E98B7001CD8F9 /* TagButton.swift */,
+				9A14563B2C7E989E001CD8F9 /* FilterPicker.swift */,
+				9A14563F2C7E98B7001CD8F9 /* FilterButton.swift */,
 			);
 			path = ActivityPickerScreen;
 			sourceTree = "<group>";
@@ -179,14 +190,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A1456422C7E98C0001CD8F9 /* TagMap.swift in Sources */,
-				9A4D13D22C83E319009BE4C8 /* OSM.swift in Sources */,
-				9A14563C2C7E989E001CD8F9 /* HorizontalTagPicker.swift in Sources */,
+				9A025CA32C85C22400001BE1 /* OSMRequest.swift in Sources */,
+				9A1456422C7E98C0001CD8F9 /* FilterMap.swift in Sources */,
+				9A4D13D22C83E319009BE4C8 /* OSMQuery.swift in Sources */,
+				9A14563C2C7E989E001CD8F9 /* FilterPicker.swift in Sources */,
 				9A14563A2C7E9885001CD8F9 /* ActivityPickerScreen.swift in Sources */,
-				9A1456402C7E98B7001CD8F9 /* TagButton.swift in Sources */,
+				9A1456402C7E98B7001CD8F9 /* FilterButton.swift in Sources */,
 				9A14562F2C7E981B001CD8F9 /* Extensions.swift in Sources */,
-				9A1456382C7E9868001CD8F9 /* TagManager.swift in Sources */,
-				9A1456312C7E9825001CD8F9 /* OSMTag.swift in Sources */,
+				9A1456382C7E9868001CD8F9 /* FilterManager.swift in Sources */,
+				9A1456312C7E9825001CD8F9 /* MapFilter.swift in Sources */,
 				9A1456202C7E97CC001CD8F9 /* ActivityApp.swift in Sources */,
 				9A1456362C7E985C001CD8F9 /* MapManager.swift in Sources */,
 				9A1456332C7E9841001CD8F9 /* UserLocation.swift in Sources */,
