@@ -1,8 +1,6 @@
 import SwiftUI
 import MapKit
 
-
-
 @Observable class MapManager
 {    
     weak var filterManager: FilterManager?
@@ -42,8 +40,12 @@ import MapKit
 
 extension MapManager
 {
-
-
+    enum MapPlatform
+    {
+        case apple
+        case osm
+    }
+        
     private func addMapMarkers(for tag: MapFilter, region: MKCoordinateRegion, platform: MapPlatform)
     {
         switch platform
@@ -68,47 +70,17 @@ extension MapManager
         }
     }
     
-    enum MapPlatform
-    {
-        case apple
-        case osm
-    }
-
-    struct MKMapTagItem: Identifiable
-    {
-        let id = UUID()
-        let mapItem: MKMapItem
-        let tag: MapFilter
-    }
-    
     private func addMapMarkersApple(for tag: MapFilter, region: MKCoordinateRegion)
     {
-        guard let category = tag.apple else { return }
-        
-        let request = MKLocalSearch.Request()
-        request.naturalLanguageQuery = tag.title
-        request.resultTypes = .pointOfInterest
-        request.pointOfInterestFilter = MKPointOfInterestFilter(including: category)
-        request.region = region
+        let request = AppleRequest(for: tag, region: region)
         
         Task.detached
         {
-            guard let response = try? await MKLocalSearch(request: request).start() else { return }
-            
-            guard let tagManager = self.filterManager,
-                  let index = tagManager.allTags.firstIndex(of: tag),
-                  tagManager.allTags[index].isSelected == true
-            else { return }
-            
-            let result = response.mapItems.filter({ region.contains($0.placemark.coordinate) })
-            
-            let taggedResult = result.map { MKMapTagItem(mapItem: $0, tag: tag) }
-            
-            let newResults = self.appleSearchResults + taggedResult
+            guard let foundItems = await request.start() else { return }
             
             DispatchQueue.main.async
             {
-                self.appleSearchResults = newResults
+                self.appleSearchResults.append(contentsOf: foundItems)
             }
         }
     }

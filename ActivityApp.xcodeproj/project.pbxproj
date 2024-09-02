@@ -21,6 +21,7 @@
 		9A1456402C7E98B7001CD8F9 /* FilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A14563F2C7E98B7001CD8F9 /* FilterButton.swift */; };
 		9A1456422C7E98C0001CD8F9 /* FilterMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1456412C7E98C0001CD8F9 /* FilterMap.swift */; };
 		9A4D13D22C83E319009BE4C8 /* OSMQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D13D12C83E319009BE4C8 /* OSMQuery.swift */; };
+		9AC51BAF2C85CAB300DB7F3A /* AppleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC51BAE2C85CAB300DB7F3A /* AppleRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		9A14563F2C7E98B7001CD8F9 /* FilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButton.swift; sourceTree = "<group>"; };
 		9A1456412C7E98C0001CD8F9 /* FilterMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterMap.swift; sourceTree = "<group>"; };
 		9A4D13D12C83E319009BE4C8 /* OSMQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSMQuery.swift; sourceTree = "<group>"; };
+		9AC51BAE2C85CAB300DB7F3A /* AppleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,15 +54,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9A025CA12C85C20600001BE1 /* OSM */ = {
-			isa = PBXGroup;
-			children = (
-				9A4D13D12C83E319009BE4C8 /* OSMQuery.swift */,
-				9A025CA22C85C22400001BE1 /* OSMRequest.swift */,
-			);
-			path = OSM;
-			sourceTree = "<group>";
-		};
 		9A1456132C7E97CC001CD8F9 = {
 			isa = PBXGroup;
 			children = (
@@ -93,9 +86,11 @@
 			children = (
 				9A14561F2C7E97CC001CD8F9 /* ActivityApp.swift */,
 				9A1456302C7E9825001CD8F9 /* MapFilter.swift */,
+				9A4D13D12C83E319009BE4C8 /* OSMQuery.swift */,
+				9A025CA22C85C22400001BE1 /* OSMRequest.swift */,
+				9AC51BAE2C85CAB300DB7F3A /* AppleRequest.swift */,
 				9A1456322C7E9841001CD8F9 /* UserLocation.swift */,
 				9A14562E2C7E981B001CD8F9 /* Extensions.swift */,
-				9A025CA12C85C20600001BE1 /* OSM */,
 			);
 			path = Abstract;
 			sourceTree = "<group>";
@@ -202,6 +197,7 @@
 				9A1456202C7E97CC001CD8F9 /* ActivityApp.swift in Sources */,
 				9A1456362C7E985C001CD8F9 /* MapManager.swift in Sources */,
 				9A1456332C7E9841001CD8F9 /* UserLocation.swift in Sources */,
+				9AC51BAF2C85CAB300DB7F3A /* AppleRequest.swift in Sources */,
 				9A14563E2C7E98A7001CD8F9 /* SearchBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
