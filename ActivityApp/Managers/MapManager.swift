@@ -87,8 +87,8 @@ extension MapManager
     
     private func removeMapMarkers(for category: MapCategory)
     {
-        appleSearchResults = appleSearchResults.filter { return $0.category.id != category.id }
-        osmSearchResults = osmSearchResults.filter { return $0.category.id != category.id }
+        appleSearchResults = appleSearchResults.filter { $0.category.id != category.id }
+        osmSearchResults = osmSearchResults.filter { $0.category.id != category.id }
     }
 }
 
