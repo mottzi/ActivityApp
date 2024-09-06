@@ -3,7 +3,7 @@ import MapKit
 
 @Observable class MapManager
 {    
-    weak var categoryManager: CategoryManager?
+    @ObservationIgnored weak var categoryManager: CategoryManager?
     
     @ObservationIgnored let locationManager = CLLocationManager()
     @ObservationIgnored var position: MapCameraPosition = .userLocation(fallback: .automatic)
@@ -57,10 +57,10 @@ extension MapManager
 
     private func addMapMarkersOSM(for category: MapCategory, region: MKCoordinateRegion)
     {
-        let request = OSMRequest(for: category, region: region)
-        
         Task.detached
         {
+            let request = OSMRequest(for: category, region: region)
+
             guard let foundItems = await request.start() else { return }
             
             DispatchQueue.main.async
@@ -72,10 +72,10 @@ extension MapManager
     
     private func addMapMarkersApple(for category: MapCategory, region: MKCoordinateRegion)
     {
-        let request = AppleRequest(with: category, region: region)
-        
         Task.detached
         {
+            let request = AppleRequest(with: category, region: region)
+
             guard let foundItems = await request.start() else { return }
             
             DispatchQueue.main.async
@@ -87,8 +87,8 @@ extension MapManager
     
     private func removeMapMarkers(for category: MapCategory)
     {
-        appleSearchResults = appleSearchResults.filter { return $0.category.id != category.id }
-        osmSearchResults = osmSearchResults.filter { return $0.category.id != category.id }
+        appleSearchResults = appleSearchResults.filter { $0.category.id != category.id }
+        osmSearchResults = osmSearchResults.filter { $0.category.id != category.id }
     }
 }
 

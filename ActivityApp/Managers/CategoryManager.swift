@@ -3,7 +3,7 @@ import MapKit
 
 @Observable class CategoryManager
 {
-    weak var mapManager: MapManager?
+    @ObservationIgnored weak var mapManager: MapManager?
     
     var allCategories: [MapCategory] = MapCategory.allCategories
     var selectedCategories: [MapCategory] { allCategories.filter({ $0.isSelected }) }
