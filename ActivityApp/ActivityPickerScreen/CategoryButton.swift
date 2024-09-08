@@ -10,7 +10,7 @@ struct CategoryButton: View
     {
         categoryLabel
             .background { categoryBackground }
-            .padding(.vertical, 14)
+            .padding(.bottom, 14)
             .padding(.bottom, 30)
             .contentShape(.rect)
             .geometryGroup()
